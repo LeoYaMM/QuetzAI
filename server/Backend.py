@@ -8,8 +8,7 @@ from pydantic import BaseModel
 from sqlConnector import *
 from GeminiAPIResumen import resumen_Gemini
 from GeminiAPITrivia import *
-import json
-import logging
+
 
 app = FastAPI()
 
