@@ -1,14 +1,12 @@
 # Description: Este script se encarga de conectarse con el front y el back para realizar la lectura de los QRs y la generación de preguntas de trivia.
 #* Status: Complete
-from fastapi.staticfiles import StaticFiles
+
 from fastapi import *
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 from sqlConnector import *
 from GeminiAPIResumen import resumen_Gemini
 from GeminiAPITrivia import *
-
 
 app = FastAPI()
 
@@ -21,10 +19,10 @@ app.add_middleware(
     allow_headers=["*"],  # Permitir todos los headers
 )
 
-# Pydantic model para las peticiones del QR
-class QRRequest(BaseModel): # Pydantic model para los QR
-    qr_data: str # Datos del QR
-    id_visitante: int  # ID del visitante a partir de las cookies
+# Pydantic model para las peticiones del NFC
+class ScanRequest(BaseModel):
+    scan_data: str  # NFC ID
+    id_visitante: int
 
 class Visitante(BaseModel): # Pydantic model para los visitantes
     nombre: str
@@ -50,20 +48,21 @@ async def registrar_visitante(visitante: Visitante):
     else:
         raise HTTPException(status_code=500, detail="Error al crear visitante")
 
-# Ruta que recibe el QR
-@app.post("/scan_qr")  #* Funciona correctamente
-async def scan_qr(qr_request: QRRequest):
-    qr_data = qr_request.qr_data
-    id_visitante = qr_request.id_visitante
-    
-    # Desencriptar el QR y obtener el id_objeto
-    id_objeto = obtener_id_objeto(qr_data)
-    if id_objeto is None:
-        raise HTTPException(status_code=400, detail="Error al desencriptar el hash.")
-    
-    # Obtener el resumen usando id_objeto e id_visitante
+# Ruta que recibe el NFC
+@app.post("/scan_id")
+async def scan_id(request: ScanRequest):
+    # Obtener el ID que viene de NFC
+    scan_data = request.scan_data
+    id_visitante = request.id_visitante
+
+    # Buscar el objeto en la base de datos
+    id_objeto = obtener_id_objeto(scan_data)
+    if not id_objeto:
+        raise HTTPException(status_code=400, detail="No se encontró el objeto.")
+
+    # Generar el resumen
     resumen = resumen_Gemini(id_objeto, id_visitante)
-    
+
     return {"resumen": resumen}
 
 @app.post("/trivia")
