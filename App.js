@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -7,8 +7,72 @@ import {
   TextInput,
   Pressable,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Función para guardar el id en el dispositivo
+async function guardarIdVisitante(id) {
+  try {
+    await AsyncStorage.setItem('id_visitante', id.toString());
+    console.log('ID guardado correctamente');
+  } catch (error) {
+    console.error('Error guardando el ID: ', error);
+  }
+}
+
+// Función para recuperar el id desde el dispositivo
+async function obtenerIdVisitante() {
+  try {
+    const id = await AsyncStorage.getItem('id_visitante');
+    if (id !== null) {
+      return id;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error leyendo el ID: ', error);
+  }
+}
+
+// Función para enviar los datos al servidor
+async function iniciarRegistro(nombre, edad) {
+  const resultado = await registrarVisitante(nombre, edad);
+  if (resultado && resultado.id_visitante) {
+    await guardarIdVisitante(resultado.id_visitante);
+    // Continúa con la lógica de la app (por ejemplo, redirigir a la pantalla principal)
+  } else {
+    console.error('No se pudo registrar al visitante.');
+  }
+}
+
+// Función para enviar los datos al servidor
+async function registrarVisitante(nombre, edad) {
+  try {
+    const response = await fetch('http://10.0.2.2:8000/registrar_visitante', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({nombre, edad}),
+    });
+    if (response.ok) {
+      return await response.json();
+    }
+    return null;
+  } catch (error) {
+    console.error('Error al registrar el visitante: ', error);
+    return null;
+  }
+}
 
 export default function App() {
+  const [nombre, setNombre] = useState('');
+  const [edad, setEdad] = useState('');
+
+  // Función que se ejecuta al presionar el botón "INICIAR"
+  const handlePress = () => {
+    console.log('Nombre:', nombre, 'Edad:', edad);
+    iniciarRegistro(nombre, edad);
+  };
+
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require('./img/QuetzAI.png')} />
@@ -20,11 +84,15 @@ export default function App() {
         style={styles.input}
         placeholder="Nombre"
         keyboardType="default"
+        onChangeText={setNombre} // Actualiza el estado "nombre"
+        value={nombre} // Muestra el valor actual del estado
       />
       <TextInput
         style={styles.input}
         placeholder="Edad"
         keyboardType="numeric"
+        onChangeText={setEdad} // Actualiza el estado "edad"
+        value={edad} // Muestra el valor actual del estado
       />
       <Pressable
         style={({pressed}) => [
@@ -33,7 +101,8 @@ export default function App() {
             color: pressed ? '#fff' : 'black',
           },
           styles.button,
-        ]}>
+        ]}
+        onPress={handlePress}>
         <Text style={styles.textInPlace}>INICIAR</Text>
       </Pressable>
     </View>
