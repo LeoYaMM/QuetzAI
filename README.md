@@ -1,50 +1,20 @@
-# Welcome to your Expo app 👋
+## Inspiration
+QuetzAI was born out of the need to make information in museums **accessible** to all ages. This information is often specialized and therefore many people do not retain the information on display efficiently.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## What it does
+QuetzAI reads QRs that contain the information of an historical object and do an **abstractive summary** of the information according to the **visitor's age**. Finally, after 10 objects scanned, there is the possibility to put on practice the new knowledge acquired by a trivia activity, where the questions are **generated dynamically** according to the scanned information and visitor's age.  
 
-## Get started
+## How we built it
+We built a web application using **HTML**, **CSS** and **JavaScript** for the user interface, but the magic happens behind. There is a **Relational Data Base** where we store the visitor's information and object's information, using queries where **Gemini** creates abstractive summaries based on visitor's age, and storing this at the DB, and finally using these summaries to create **personalized questions** where visitors can put their knowledge on practice.  
 
-1. Install dependencies
+## Challenges we ran into
+The most tough challenge we had, is how can we **iterate** between summaries to generate the questions and as AI developers is one of our firsts approaches to the **web development**. 
 
-   ```bash
-   npm install
-   ```
+## Accomplishments that we're proud of
+Definitely we are proud of our system because we conceive it to be **inclusive** for all people of all ages who are interested about history and be an approach por people who doesn't, in such a way that **helps museums** to do their goal: **impart knowledge**.
 
-2. Start the app
+## What we learned
+We learned a lot about generative AI, web development, user experience and data base management.
 
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## What's next for QuetzAI: A new way to visit museums?
+An awesome question! This web application is generalized, letting museums of all the world and all tematices use this app, so their visitors can learn more having fun in the process.
