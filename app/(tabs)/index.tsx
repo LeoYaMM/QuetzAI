@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 // Función para guardar el id en el dispositivo
 async function guardarIdVisitante(id: number) {
   try {
