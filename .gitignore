@@ -67,3 +67,9 @@ yarn-error.log
 
 # Docker ignore
 .dockerignore
+
+.vscode
+
+__tests__/
+
+.prettierrc.js
