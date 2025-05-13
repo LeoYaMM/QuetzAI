@@ -65,11 +65,11 @@ yarn-error.log
 # testing
 /coverage
 
-# Docker ignore
-.dockerignore
-
+# Visual Studio
 .vscode
 
+# Tests cache
 __tests__/
 
-.prettierrc.js
+# Env file
+*.env
