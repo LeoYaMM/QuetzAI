@@ -64,3 +64,10 @@ yarn-error.log
 
 # testing
 /coverage
+
+# Docker ignore
+# Ignore the Dockerfile and docker-compose.yml files
+# as they are not needed in the container
+Dockerfile
+docker-compose.yml
+.dockerignore
