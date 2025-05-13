@@ -69,5 +69,5 @@ yarn-error.log
 # Ignore the Dockerfile and docker-compose.yml files
 # as they are not needed in the container
 Dockerfile
-docker-compose.yml
+compose.yml
 .dockerignore
