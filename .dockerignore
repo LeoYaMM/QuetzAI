@@ -3,32 +3,51 @@
 #
 # For more help, visit the .dockerignore file reference guide at
 # https://docs.docker.com/go/build-context-dockerignore/
+# === Node.js / React Native ===
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+.env
 
-**/.DS_Store
-**/__pycache__
-**/.venv
-**/.classpath
-**/.dockerignore
-**/.env
-**/.git
-**/.gitignore
-**/.project
-**/.settings
-**/.toolstarget
-**/.vs
-**/.vscode
-**/*.*proj.user
-**/*.dbmdl
-**/*.jfm
-**/bin
-**/charts
-**/docker-compose*
-**/compose.y*ml
-**/Dockerfile*
-**/node_modules
-**/npm-debug.log
-**/obj
-**/secrets.dev.yaml
-**/values.dev.yaml
-LICENSE
+# === Python ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# === Git ===
+.git/
+.gitignore
+
+# === Docker ===
+.dockerignore
+Dockerfile
+docker-compose.yml
+compose.yaml
+
+# === VSCode y entorno local ===
+.vscode/
+.DS_Store
+*.swp
+
+# === Otros posibles archivos locales o binarios ===
+*.sqlite
+*.db
+*.pem
+*.crt
+*.key
+
+# === Archivos de configuración que no se usan en la imagen final ===
+babel.config.js
+jest.config.js
+metro.config.js
+tsconfig.json
+.prettierrc.*
+.eslintrc.*
+.watchmanconfig
+
+# === Documentación ===
 README.md
+README.Docker.md
