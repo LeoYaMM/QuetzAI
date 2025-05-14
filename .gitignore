@@ -73,3 +73,6 @@ __tests__/
 
 # Env file
 *.env
+
+# Python cache
+__pycache__/

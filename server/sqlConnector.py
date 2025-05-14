@@ -1,6 +1,6 @@
 # Description: Aqui se encuentran las funciones que se encargan de la conexión con la base de datos
 #* Status: Complete
-
+import os
 import mysql.connector
 from mysql.connector import Error
 
@@ -9,10 +9,11 @@ def create_connection():
     """Crear una conexión a la base de datos"""
     try:
         connection = mysql.connector.connect(
-            host = '127.0.0.1',
-            database ='museo',  
-            user = 'root',  
-            password = 'Blow85**'
+            host = os.getenv("DB_HOST"),
+            port=int(os.getenv("DB_PORT", 3306)),
+            database = os.getenv("DB_NAME"),  
+            user = os.getenv("DB_USER"),  
+            password = os.getenv("DB_PASSWORD")
         )
         if connection.is_connected():
             print("Conexión exitosa a la base de datos 'museo'")
