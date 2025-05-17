@@ -33,6 +33,10 @@ class TriviaRequest(BaseModel):
     id_visitante: int
     noResumen: int
 
+@app.get("/")
+def home():
+    return {"message": "Servidor FastAPI funcionando correctamente 🚀"}
+
 # Ruta para registrar un visitante
 @app.post("/registrar_visitante") #* Funciona correctamente
 async def registrar_visitante(visitante: Visitante):
@@ -83,4 +87,4 @@ async def trivia(request: TriviaRequest):
 
 
 
-#TODO: Para correr el servidor de FastAPI: uvicorn Backend:app --reload
+#TODO: Para correr el servidor de FastAPI: docker-compose up --build
