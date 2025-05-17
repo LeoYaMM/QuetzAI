@@ -46,7 +46,7 @@ async function iniciarRegistro(nombre, edad) {
 // Función para enviar los datos al servidor
 async function registrarVisitante(nombre, edad) {
   try {
-    const response = await fetch('http://localhost:8000/registrar_visitante', {
+    const response = await fetch('http://10.0.2.2:8000/registrar_visitante', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
