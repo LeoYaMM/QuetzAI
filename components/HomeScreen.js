@@ -17,7 +17,7 @@ export default function HomeScreen({
     <View style={styles.container}>
       <Image style={styles.logo} source={require('../img/QuetzAI.png')} />
       <Text style={styles.textLogo1}>
-        ¡Bienvenido <Text style={styles.textLogo2}>{nombre}</Text>!
+        ¡Bienvenido, <Text style={styles.textLogo2}>{nombre}</Text>!
       </Text>
       <Text style={styles.subtitle}>Edad: {edad} años</Text>
       
@@ -31,6 +31,18 @@ export default function HomeScreen({
         ]}
         onPress={onNavigateToNfc}>
         <Text style={[styles.textInPlace, {color: '#008000'}]}>Escanear NFC</Text>
+      </Pressable>
+      
+      <Pressable
+        style={({pressed}) => [
+          {
+            backgroundColor: pressed ? '#9b59b6' : '#fff',
+            borderColor: '#9b59b6',
+          },
+          styles.button,
+        ]}
+        onPress={() => onNavigateToNfc(true)}>
+        <Text style={[styles.textInPlace, {color: '#9b59b6'}]}>🧪 Modo Demo</Text>
       </Pressable>
       
       <Pressable

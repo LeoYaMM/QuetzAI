@@ -12,13 +12,64 @@ import NfcManager, {NfcTech} from 'react-native-nfc-manager';
 
 export default function NfcScreen({ 
   onNavigateBack, 
-  nombre 
+  nombre,
+  isDemoMode = false
 }) {
   const [isScanning, setIsScanning] = useState(false);
   const [artifactInfo, setArtifactInfo] = useState(null);
   const [lastScannedTime, setLastScannedTime] = useState(null);
 
+  // Datos de ejemplo para el modo demo
+  const demoArtifacts = [
+    {
+      nombre: "Máscara de Jade Maya",
+      descripcion: "Esta magnífica máscara ceremonial representa el poder divino de los gobernantes mayas. Fue tallada en jade verde, piedra considerada más valiosa que el oro para las civilizaciones mesoamericanas. Los intrincados detalles simbolizan la conexión entre el mundo terrenal y el espiritual.",
+      epoca: "Período Clásico Maya (250-900 d.C.)",
+      origen: "Calakmul, Campeche",
+      material: "Jade verde con incrustaciones de obsidiana"
+    },
+    {
+      nombre: "Códice Azteca de Tributos",
+      descripcion: "Documento pictográfico que registra los tributos que debían pagar las provincias conquistadas al Imperio Azteca. Incluye representaciones de productos como cacao, plumas de quetzal, mantas y piedras preciosas, revelando la complejidad económica del imperio.",
+      epoca: "Siglo XV-XVI d.C.",
+      origen: "Tenochtitlan, México",
+      material: "Papel amate con pigmentos naturales"
+    },
+    {
+      nombre: "Vaso Ceremonial Zapoteca",
+      descripcion: "Elegante recipiente utilizado en ceremonias religiosas zapotecas. Sus diseños geométricos representan elementos cosmogónicos y su forma específica estaba reservada para rituales de los sacerdotes. La técnica de cocción le da su característico color gris.",
+      epoca: "Período Clásico Zapoteca (200-700 d.C.)",
+      origen: "Monte Albán, Oaxaca",
+      material: "Cerámica gris con engobe"
+    }
+  ];
+
+  // Función para simular escaneo de demo
+  const simulateNfcScan = () => {
+    setIsScanning(true);
+    
+    // Simular tiempo de escaneo
+    setTimeout(() => {
+      const randomArtifact = demoArtifacts[Math.floor(Math.random() * demoArtifacts.length)];
+      setArtifactInfo(randomArtifact);
+      setLastScannedTime(new Date().toLocaleTimeString());
+      setIsScanning(false);
+      
+      Alert.alert(
+        '🎭 Modo Demo Activado', 
+        `¡Hola ${nombre}! Has simulado el escaneo de: "${randomArtifact.nombre}"`
+      );
+    }, 2000);
+  };
+
   const readNfc = async () => {
+    // Si está en modo demo, usar simulación
+    if (isDemoMode) {
+      simulateNfcScan();
+      return;
+    }
+
+    // Código NFC real
     try {
       setIsScanning(true);
       await NfcManager.requestTechnology(NfcTech.Ndef);
@@ -71,10 +122,21 @@ export default function NfcScreen({
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image style={styles.logo} source={require('../img/QuetzAI.png')} />
-      <Text style={styles.title}>🏛️ Información del Museo</Text>
-      <Text style={styles.subtitle}>
-        Acerca tu dispositivo al tag NFC de cualquier artefacto para conocer su historia
+      <Text style={styles.title}>
+        {isDemoMode ? '� Modo Demo - Información del Museo' : '�🏛️ Información del Museo'}
       </Text>
+      <Text style={styles.subtitle}>
+        {isDemoMode 
+          ? 'Presiona el botón para simular el escaneo de un artefacto aleatorio'
+          : 'Acerca tu dispositivo al tag NFC de cualquier artefacto para conocer su historia'
+        }
+      </Text>
+      
+      {isDemoMode && (
+        <Text style={styles.demoWarning}>
+          ⚠️ Estás en modo demostración. Los datos mostrados son ejemplos.
+        </Text>
+      )}
       
       <Pressable
         style={({pressed}) => [
@@ -87,7 +149,10 @@ export default function NfcScreen({
         onPress={readNfc}
         disabled={isScanning}>
         <Text style={[styles.textInPlace, {color: '#fff'}]}>
-          {isScanning ? '📡 Escaneando...' : '🔍 Escanear Artefacto'}
+          {isScanning 
+            ? (isDemoMode ? '🎭 Simulando...' : '📡 Escaneando...') 
+            : (isDemoMode ? '🎲 Escanear Demo' : '🔍 Escanear Artefacto')
+          }
         </Text>
       </Pressable>
 
@@ -248,5 +313,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 15,
     fontStyle: 'italic',
+  },
+  demoWarning: {
+    fontSize: 14,
+    color: '#f39c12',
+    textAlign: 'center',
+    backgroundColor: '#fef9e7',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 15,
+    fontWeight: 'bold',
   },
 });

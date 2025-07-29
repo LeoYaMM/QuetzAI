@@ -95,8 +95,12 @@ export default function App() {
   };
 
   // Función de navegación
-  const navigateTo = (screen) => {
-    setCurrentScreen(screen);
+  const navigateTo = (screen, isDemoMode = false) => {
+    if (screen === 'nfc' && isDemoMode) {
+      setCurrentScreen('nfc-demo');
+    } else {
+      setCurrentScreen(screen);
+    }
   };
 
   // Renderizar pantalla actual
@@ -113,7 +117,7 @@ export default function App() {
             <HomeScreen
               nombre={nombre}
               edad={edad}
-              onNavigateToNfc={() => navigateTo('nfc')}
+              onNavigateToNfc={(isDemoMode) => navigateTo('nfc', isDemoMode)}
               onLogout={handleLogout}
             />
           );
@@ -123,6 +127,16 @@ export default function App() {
             <NfcScreen
               onNavigateBack={() => navigateTo('home')}
               nombre={nombre}
+              isDemoMode={false}
+            />
+          );
+        
+        case 'nfc-demo':
+          return (
+            <NfcScreen
+              onNavigateBack={() => navigateTo('home')}
+              nombre={nombre}
+              isDemoMode={true}
             />
           );
         
