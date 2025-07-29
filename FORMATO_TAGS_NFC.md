@@ -20,13 +20,14 @@ Los tags NFC deben contener información sobre los artefactos del museo que los 
 
 ### Opción 2: Texto Plano (Alternativo)
 
-```
+```txt
 Máscara de Jade Olmeca - Esta máscara representa el poder divino de los gobernantes olmecas. Fue tallada en jade verde, piedra considerada más valiosa que el oro para las civilizaciones mesoamericanas.
 ```
 
 ## 🏺 Ejemplos de Artefactos
 
 ### Ejemplo 1: Escultura
+
 ```json
 {
   "nombre": "Cabeza Colosal Olmeca",
@@ -38,6 +39,7 @@ Máscara de Jade Olmeca - Esta máscara representa el poder divino de los gobern
 ```
 
 ### Ejemplo 2: Codice
+
 ```json
 {
   "nombre": "Códice Dresde (Réplica)",
@@ -49,6 +51,7 @@ Máscara de Jade Olmeca - Esta máscara representa el poder divino de los gobern
 ```
 
 ### Ejemplo 3: Textil
+
 ```json
 {
   "nombre": "Huipil Ceremonial Zapoteca",
@@ -62,10 +65,12 @@ Máscara de Jade Olmeca - Esta máscara representa el poder divino de los gobern
 ## 🔧 Características Técnicas
 
 ### Campos Obligatorios
+
 - **nombre**: Nombre del artefacto
 - **descripcion**: Información detallada sobre el objeto
 
 ### Campos Opcionales
+
 - **epoca**: Período histórico o fecha
 - **origen**: Lugar de procedencia
 - **material**: Material de construcción

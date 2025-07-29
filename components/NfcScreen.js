@@ -64,7 +64,7 @@ export default function NfcScreen({
 
   const readNfc = async () => {
     // Si está en modo demo, usar simulación
-    if (isDemoMode) {
+    if (!NfcManager.isSupported() || isDemoMode) {
       simulateNfcScan();
       return;
     }
@@ -123,7 +123,7 @@ export default function NfcScreen({
     <ScrollView contentContainerStyle={styles.container}>
       <Image style={styles.logo} source={require('../img/QuetzAI.png')} />
       <Text style={styles.title}>
-        {isDemoMode ? '� Modo Demo - Información del Museo' : '�🏛️ Información del Museo'}
+        {isDemoMode ? ' Modo Demo - Información del Museo' : '�🏛️ Información del Museo'}
       </Text>
       <Text style={styles.subtitle}>
         {isDemoMode 
