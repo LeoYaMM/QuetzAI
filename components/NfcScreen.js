@@ -63,6 +63,9 @@ export default function NfcScreen({
   };
 
   const readNfc = async () => {
+    // Inicializar NfcManager 
+    NfcManager.start();
+    
     // Si está en modo demo, usar simulación
     if (!NfcManager.isSupported() || isDemoMode) {
       simulateNfcScan();
