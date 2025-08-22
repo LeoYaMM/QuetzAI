@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:nfc_manager/nfc_manager.dart';
@@ -12,8 +11,6 @@ class NfcScreen extends StatefulWidget {
   @override
   _NfcScreenState createState() => _NfcScreenState();
 }
-
-bool isAvailable = await NfcManager.instance.isAvailable();
 
 class _NfcScreenState extends State<NfcScreen> {
   final _apiService = ApiService();
