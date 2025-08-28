@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:nfc_manager/nfc_manager.dart';
-import 'package:nfc_manager_ndef/nfc_manager_ndef.dart';
 import 'package:quetzai/services/api_service.dart';
 
 class NfcScreen extends StatefulWidget {
@@ -13,13 +12,27 @@ class NfcScreen extends StatefulWidget {
   _NfcScreenState createState() => _NfcScreenState();
 }
 
-bool isAvailable = await NfcManager.instance.isAvailable();
-
 class _NfcScreenState extends State<NfcScreen> {
   final _apiService = ApiService();
   bool _isScanning = false;
   String _artifactInfo = 'No se ha escaneado nada aún.';
   int? _visitorId;
+  bool _isNfcAvailable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkNfcAvailability();
+  }
+
+  Future<void> _checkNfcAvailability() async {
+    bool isAvailable = await NfcManager.instance.isAvailable();
+    if (mounted) {
+      setState(() {
+        _isNfcAvailable = isAvailable;
+      });
+    }
+  }
 
   @override
   void didChangeDependencies() {
@@ -31,6 +44,11 @@ class _NfcScreenState extends State<NfcScreen> {
   }
 
   Future<void> _startNfcScan() async {
+    if (!_isNfcAvailable) {
+      _updateArtifactInfo('NFC no está disponible en este dispositivo.');
+      return;
+    }
+
     setState(() {
       _isScanning = true;
       _artifactInfo = 'Escaneando... acerca el tag NFC.';
@@ -125,11 +143,16 @@ class _NfcScreenState extends State<NfcScreen> {
               ElevatedButton.icon(
                 icon: _isScanning ? const CircularProgressIndicator(color: Colors.white) : const Icon(Icons.nfc),
                 label: Text(_isScanning ? 'Escaneando...' : (isDemoMode ? 'Simular Escaneo' : 'Escanear Artefacto')),
-                onPressed: _isScanning ? null : (isDemoMode ? _simulateNfcScan : _startNfcScan),
+                onPressed: _isScanning || !_isNfcAvailable && !isDemoMode ? null : (isDemoMode ? _simulateNfcScan : _startNfcScan),
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(200, 50),
                 ),
               ),
+              if (!_isNfcAvailable)
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('NFC no disponible o desactivado.', style: TextStyle(color: Colors.red)),
+                ),
               const SizedBox(height: 30),
               const Text(
                 'Información del Artefacto:',
