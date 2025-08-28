@@ -1,0 +1,1 @@
+ /Users/edu/Documents/QuetzAI/QuetzAI/.dart_tool/flutter_build/8caacdf254ad1bffd027296eb322bd41/native_assets.json: 

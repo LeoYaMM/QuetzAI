@@ -164,6 +164,12 @@
       "languageVersion": "3.7"
     },
     {
+      "name": "nfc_manager_ndef",
+      "rootUri": "file:///Users/edu/.pub-cache/hosted/pub.dev/nfc_manager_ndef-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.7"
+    },
+    {
       "name": "path",
       "rootUri": "file:///Users/edu/.pub-cache/hosted/pub.dev/path-1.9.1",
       "packageUri": "lib/",

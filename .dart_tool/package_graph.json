@@ -12,6 +12,7 @@
         "google_fonts",
         "http",
         "nfc_manager",
+        "nfc_manager_ndef",
         "provider",
         "shared_preferences"
       ],
@@ -43,6 +44,14 @@
         "stream_channel",
         "test_api",
         "vector_math"
+      ]
+    },
+    {
+      "name": "nfc_manager_ndef",
+      "version": "1.0.1",
+      "dependencies": [
+        "flutter",
+        "nfc_manager"
       ]
     },
     {

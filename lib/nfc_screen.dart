@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:nfc_manager/nfc_manager.dart' as nfc;
+import 'package:nfc_manager/nfc_manager.dart';
+import 'package:nfc_manager_ndef/nfc_manager_ndef.dart';
 import 'package:quetzai/services/api_service.dart';
 
 class NfcScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _NfcScreenState extends State<NfcScreen> {
   }
 
   Future<void> _checkNfcAvailability() async {
-    bool isAvailable = await nfc.NfcManager.instance.isAvailable();
+    bool isAvailable = await NfcManager.instance.isAvailable();
     if (mounted) {
       setState(() {
         _isNfcAvailable = isAvailable;
@@ -55,10 +56,10 @@ class _NfcScreenState extends State<NfcScreen> {
     });
 
     try {
-      await nfc.NfcManager.instance.startSession(
-        onDiscovered: (nfc.NfcTag tag) async {
+      await NfcManager.instance.startSession(
+        onDiscovered: (NfcTag tag) async {
           try {
-            final ndef = nfc.Ndef.from(tag);
+            final ndef = Ndef.from(tag);
             if (ndef == null) {
               _updateArtifactInfo('El tag no es compatible con NDEF.');
               return;
@@ -88,13 +89,13 @@ class _NfcScreenState extends State<NfcScreen> {
           } catch (e) {
             _updateArtifactInfo('Error procesando el tag: $e');
           } finally {
-            nfc.NfcManager.instance.stopSession();
+            NfcManager.instance.stopSession();
           }
         },
         pollingOptions: {
-          nfc.NfcPollingOption.iso14443,
-          nfc.NfcPollingOption.iso15693,
-          nfc.NfcPollingOption.iso18092,
+          NfcPollingOption.iso14443,
+          NfcPollingOption.iso15693,
+          NfcPollingOption.iso18092,
         },
       );
     } catch (e) {
