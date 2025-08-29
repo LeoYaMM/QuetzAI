@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
         
         if (response.containsKey('id_visitante')) {
           final prefs = await SharedPreferences.getInstance();
-          await prefs.setInt('visitor_id', response['id_visitante']);
+          await prefs.setInt('visitor_id', (response['id_visitante'] as List).first);
           await prefs.setString('visitor_name', name);
           await prefs.setInt('visitor_age', ageInt);
 
