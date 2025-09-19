@@ -17,5 +17,8 @@ subprojects {
 }
 
 tasks.register<Delete>("clean") {
-    delete(rootProject.layout.buildDirectory)
+    description = "Generates the HTML documentation for this project."
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    title.set("Project docs")
+    outputDir.set(layout.buildDirectory.dir("docs"))
 }
