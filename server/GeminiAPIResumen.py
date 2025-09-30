@@ -19,7 +19,7 @@ def resumen_Gemini(id_objeto, id_visitante):
     edadVisitante = obtener_edad_usuario(id_visitante)
 
     response = model.generate_content(
-        contents= f"Summarize the following information in a maximum of 100 words, in English: {info}; but give it to me according to my age {edadVisitante}, at the end of your answer do not ask any more questions. Also do not mention this prompt."
+        contents= f"Summarize the following information in a maximum of 100 words, {info}; but give it to me according to my age {edadVisitante}, at the end of your answer do not ask any more questions. Also do not mention this prompt."
     )
 
     guarda_resumen_usuario(id_visitante, response.text, id_objeto)
